@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { LuChevronLeft, LuChevronRight, LuLayoutDashboard } from "react-icons/lu";
+import { useLocation } from "react-router-dom";
 
 export default function Sidebar() {
     const [isSideNav, setSideNav] = useState(true);
+    const location = useLocation();
 
     return (
         <aside
@@ -12,10 +14,10 @@ export default function Sidebar() {
                 <img
                     src="/remote_interview_logo.png"
                     alt="Interview Pro Logo"
-                    className="w-11 h-11 object-contain shrink-0"
+                    className="w-8 h-8 object-contain shrink-0"
                 />
                 <span
-                    className={`text-md sm:text-lg mb-1 transition-all duration-300 font-semibold text-white tracking-tight
+                    className={`text-md sm:text-xl mb-1 transition-all duration-300 font-semibold text-white tracking-tight
                     ${isSideNav
                             ? 'opacity-100 translate-x-0 w-auto'
                             : 'opacity-0 overflow-hidden w-0 pointer-events-none'
@@ -26,21 +28,21 @@ export default function Sidebar() {
             </div>
             <button
                 onClick={() => setSideNav(!isSideNav)}
-                className="absolute cursor-pointer z-50 -right-3 top-20 bg-gray-500 border border-gray-300 text-white rounded-full p-1 shadow-md hover:scale-105 transition"
+                className="absolute cursor-pointer z-50 -right-3 top-20 bg-zinc-800 border border-gray-300 text-white rounded-full p-1 shadow-md hover:scale-105 transition"
             >
                 {isSideNav ? <LuChevronLeft size={16} /> : <LuChevronRight size={16} />}
             </button>
-            <ul className="list-none space-y-2 mt-14">
+            <ul className="list-none space-y-2 mt-20">
                 <li
-                    className="cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group hover:bg-blue-500/10"
+                    className={`cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group ${location.pathname === '/dashboard' ? 'bg-blue-500/10' : 'hover:bg-blue-500/10'}`}
                 >
                     <span className="absolute left-0 top-0 h-full w-1 bg-blue-500 rounded-r-md"></span>
                     <div className="flex items-center gap-3">
-                        <span className="text-xl group-hover:text-blue-400">
+                        <span className={`text-xl ${location.pathname === '/dashboard' ? 'text-blue-400' : 'group-hover:text-blue-400'} `}>
                             <LuLayoutDashboard />
                         </span>
                         <span
-                            className={`font-semibold group-hover:text-blue-400 transition-opacity duration-300 text-sm
+                            className={`font-semibold ${location.pathname === '/dashboard' ? 'text-blue-400' : 'group-hover:text-blue-400'} transition-opacity duration-300 text-sm
                                         ${isSideNav
                                     ? 'opacity-100'
                                     : 'opacity-0 w-0 overflow-hidden pointer-events-none'
