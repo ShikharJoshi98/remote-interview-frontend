@@ -1,8 +1,46 @@
 import { useState } from "react";
 import { LuX } from "react-icons/lu";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Input from "../Input";
+import { registerUser } from "../../api/authApi";
+import { setRegisterCredentials } from "../../store/features/auth/authSlice";
 
 export function AuthModal({ onClose }) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isMode, setMode] = useState('login');
+    const [registerData, setRegisterData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        role: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setRegisterData((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const data = await registerUser(registerData);
+            console.log(registerData);
+        } catch (error) {
+            console.error(error);
+        }
+        // setRegisterData(
+        //     {
+        //         name: '',
+        //         email: '',
+        //         password: '',
+        //         role: ''
+        //     }
+        // )
+    }
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 md:px-10 bg-black/70 backdrop-blur-sm">
@@ -43,24 +81,16 @@ export function AuthModal({ onClose }) {
                         <button onClick={() => setMode('login')} className={`px-6 py-2 ${isMode === 'login' ? 'bg-blue-500/80 text-white rounded-lg' : 'text-neutral-400'} text-sm font-medium`}>
                             Sign In
                         </button>
-                        <button onClick={() => setMode('register')} className={`px-6 py-2 ${isMode === 'register' ? 'bg-blue-500/80 text-white rounded-lg' : 'text-neutral-400'} text-sm`}>
+                        <button onClick={() => setMode('register')} className={`px-6 py-2 ${isMode === 'register' ? 'bg-blue-500/80 text-white rounded-lg' : 'text-neutral-400'} text-sm font-medium`}>
                             Register
                         </button>
                     </div>
                     {
                         isMode === 'login' &&
-                        <div>
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                className="mt-6 w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                            />
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="mt-4 w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                            />
-                            <div className="flex justify-between items-center w-full mt-3 text-sm text-neutral-400">
+                        <div className="mt-8 space-y-4">
+                            <Input type="email" placeholder="Email Address" />
+                            <Input type="password" placeholder="Password" />
+                            <div className="flex justify-between items-center w-full text-sm text-neutral-400">
                                 <button className="text-blue-400 hover:underline">
                                     Forgot password?
                                 </button>
@@ -77,43 +107,24 @@ export function AuthModal({ onClose }) {
                         </div>}
                     {
                         isMode === 'register' &&
-                        <div className="mt-6 space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <input
-                                    type="text"
-                                    placeholder="First Name"
-                                    className="bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Last Name"
-                                    className="bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                                />
-                            </div>
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                className="w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                            />
+                        <form onSubmit={handleRegisterSubmit} className="mt-6 space-y-4">
+                            <Input name="name" value={registerData.name} onChange={handleChange} placeholder="Name" />
+                            <Input name="email" value={registerData.email} type="email" onChange={handleChange} placeholder="Email Address" />
                             <div>
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    className="w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                                />
-                                <p className="text-xs text-neutral-400 mt-2">
-                                    Must be at least 8 characters with numbers and symbols
-                                </p>
+                                <Input name="password" value={registerData.password} type="password" onChange={handleChange} placeholder="Password" />
                             </div>
-                            <input
-                                type="password"
-                                placeholder="Confirm your password"
-                                className="w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm text-white outline-none"
-                            />
-                            <button className="w-full py-3 bg-linear-to-r from-green-400 to-blue-500 rounded-lg font-medium">
+                            <select name="role" placeholder="Select Role" value={registerData.role} onChange={handleChange}
+                                className={`w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm ${registerData.role ? 'text-white' : 'text-white/40'} outline-none`}
+                            >
+                                <option value="" disabled>Select Role</option>
+                                <option value="candidate">Candidate</option>
+                                <option value="interviewer">Interviewer</option>
+                            </select>
+                            <Input type="password" placeholder="Confirm your password" />
+                            <button type="submit" className="w-full py-3 bg-linear-to-r from-green-400 to-blue-500 rounded-lg font-medium">
                                 Create Account →
                             </button>
-                        </div>
+                        </form>
                     }
                 </div>
             </div>
