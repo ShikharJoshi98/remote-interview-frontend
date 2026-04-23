@@ -3,8 +3,9 @@ import { LuX } from "react-icons/lu";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Input from "../Input";
-import { registerUser } from "../../api/authApi";
-import { setRegisterCredentials } from "../../store/features/auth/authSlice";
+import { loginUser, registerUser } from "../../api/authApi";
+import { setLoginCredentials, setRegisterCredentials } from "../../store/features/auth/authSlice";
+import { loginSchema, registerSchema } from "../../validations/authSchema";
 
 export function AuthModal({ onClose }) {
     const dispatch = useDispatch();
@@ -16,39 +17,98 @@ export function AuthModal({ onClose }) {
         password: '',
         role: ''
     });
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: ''
+    });
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [formError, setFormError] = useState("");
+    const [loginError, setLoginError] = useState("");
 
-    const handleChange = (e) => {
+    const handleChange = (e, type) => {
         const { name, value } = e.target;
-        setRegisterData((prev) => ({
-            ...prev,
-            [name]: value
-        }));
+        if (type === 'register') {
+            setRegisterData((prev) => ({
+                ...prev,
+                [name]: value
+            }));
+        }
+        else {
+            setLoginData((prev) => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     }
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
+        const formData = {
+            ...registerData,
+            confirmPassword
+        };
+        const result = registerSchema.safeParse(formData);
+        if (!result.success) {
+            setFormError(result.error.issues[0].message);
+            return;
+        }
+        setFormError("");
         try {
             const data = await registerUser(registerData);
-            console.log(registerData);
+            setRegisterData({
+                name: "",
+                email: "",
+                password: "",
+                role: ""
+            });
+            setConfirmPassword("");
         } catch (error) {
-            console.error(error);
+            if (error.message === "User Already exists") {
+                setFormError(error.message);
+            }
+            else {
+                setFormError("Registration failed");
+            }
         }
-        // setRegisterData(
-        //     {
-        //         name: '',
-        //         email: '',
-        //         password: '',
-        //         role: ''
-        //     }
-        // )
+    };
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
+        const result = loginSchema.safeParse(loginData);
+        if (!result.success) {
+            setLoginError(result.error.issues[0].message);
+            return;
+        }
+        setLoginError("");
+        try {
+            const data = await loginUser(loginData);
+            setLoginData({
+                email: "",
+                password: "",
+            });
+            dispatch(
+                setLoginCredentials(data.data)
+            )
+
+            if (data.data.user.role === 'candidate') {
+                navigate('/dashboard');
+            }
+            else if (data.data.user.role === 'interviewer') {
+                navigate('/dashboard')
+            }
+        } catch (error) {
+            if (error.message === "Invalid Credentials") {
+                setLoginError(error.message);
+            }
+            else {
+                setLoginError("Login failed");
+            }
+        }
     }
+
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 md:px-10 bg-black/70 backdrop-blur-sm">
             <div className="relative w-225 rounded-2xl overflow-hidden border border-white/10 bg-[#0b0f17] shadow-2xl flex">
-                <button
-                    onClick={onClose}
-                    className="absolute top-4 right-4 text-neutral-400 hover:text-white"
-                >
+                <button onClick={onClose} className="absolute top-4 right-4 text-neutral-400 hover:text-white">
                     <LuX size={18} />
                 </button>
                 <div className="w-1/2 p-10 bg-black hidden md:flex flex-col justify-center">
@@ -60,7 +120,6 @@ export function AuthModal({ onClose }) {
                         />
                         <h1 className="text-white text-2xl">Interview<span className="text-blue-500">Pro</span></h1>
                     </div>
-
                     <h2 className="text-3xl mt-8 font-semibold text-white">
                         Ace Interviews.
                     </h2>
@@ -87,15 +146,20 @@ export function AuthModal({ onClose }) {
                     </div>
                     {
                         isMode === 'login' &&
-                        <div className="mt-8 space-y-4">
-                            <Input type="email" placeholder="Email Address" />
-                            <Input type="password" placeholder="Password" />
+                        <form onSubmit={handleLoginSubmit} className="mt-8 space-y-4 w-full">
+                            <Input type="email" placeholder="Email Address" name="email" value={loginData.email} onChange={(e) => handleChange(e, 'login')} />
+                            <Input type="password" placeholder="Password" name="password" value={loginData.password} onChange={(e) => handleChange(e, 'login')} />
                             <div className="flex justify-between items-center w-full text-sm text-neutral-400">
                                 <button className="text-blue-400 hover:underline">
                                     Forgot password?
                                 </button>
                             </div>
-                            <button className="mt-6 w-full cursor-pointer py-3 bg-linear-to-r from-green-400 to-blue-700 rounded-lg font-medium">
+                            {loginError && (
+                                <p className="text-red-500 text-center text-sm">
+                                    {loginError}
+                                </p>
+                            )}
+                            <button type="submit" className="mt-6 w-full cursor-pointer py-3 bg-linear-to-r from-green-400 to-blue-700 rounded-lg font-medium">
                                 Sign In →
                             </button>
                             <p className="text-sm text-neutral-400 mt-4 text-center">
@@ -104,26 +168,30 @@ export function AuthModal({ onClose }) {
                                     Sign up for free
                                 </span>
                             </p>
-                        </div>}
+                        </form>
+                    }
                     {
                         isMode === 'register' &&
-                        <form onSubmit={handleRegisterSubmit} className="mt-6 space-y-4">
-                            <Input name="name" value={registerData.name} onChange={handleChange} placeholder="Name" />
-                            <Input name="email" value={registerData.email} type="email" onChange={handleChange} placeholder="Email Address" />
+                        <form onSubmit={handleRegisterSubmit} className="mt-6 space-y-4 w-full">
+                            <Input name="name" value={registerData.name} onChange={(e) => handleChange(e, 'register')} placeholder="Name" />
+                            <Input name="email" value={registerData.email} type="email" onChange={(e) => handleChange(e, 'register')} placeholder="Email Address" />
                             <div>
-                                <Input name="password" value={registerData.password} type="password" onChange={handleChange} placeholder="Password" />
+                                <Input name="password" value={registerData.password} type="password" onChange={(e) => handleChange(e, 'register')} placeholder="Password" />
                             </div>
-                            <select name="role" placeholder="Select Role" value={registerData.role} onChange={handleChange}
+                            <select name="role" placeholder="Select Role" value={registerData.role} onChange={(e) => handleChange(e, 'register')}
                                 className={`w-full bg-[#020617] border border-white/10 rounded-lg px-4 py-3 text-sm ${registerData.role ? 'text-white' : 'text-white/40'} outline-none`}
                             >
                                 <option value="" disabled>Select Role</option>
                                 <option value="candidate">Candidate</option>
                                 <option value="interviewer">Interviewer</option>
                             </select>
-                            <Input type="password" placeholder="Confirm your password" />
-                            <button type="submit" className="w-full py-3 bg-linear-to-r from-green-400 to-blue-500 rounded-lg font-medium">
-                                Create Account →
-                            </button>
+                            <Input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm your password" />
+                            {formError && (
+                                <p className="text-red-500 text-center text-sm">
+                                    {formError}
+                                </p>
+                            )}
+                            <button type="submit" className="w-full py-3 bg-linear-to-r from-green-400 to-blue-500 rounded-lg font-medium">Create Account →</button>
                         </form>
                     }
                 </div>

@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/AdminSidebar";
 import AdminNavbar from "../components/AdminNavbar";
+import { useSelector } from "react-redux";
 
 export default function DashboardLayout() {
     return (
@@ -10,7 +11,7 @@ export default function DashboardLayout() {
             </div>
             <div className="flex flex-col w-full">
                 <AdminNavbar />
-                <div className="flex-1 bg-[#030303] overflow-y-auto">
+                <div className="flex-1 text-white text-3xl bg-[#030303] overflow-y-auto">
                     <Outlet />
                 </div>
             </div>

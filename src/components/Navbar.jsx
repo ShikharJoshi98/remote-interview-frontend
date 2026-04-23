@@ -14,9 +14,9 @@ export default function Navbar() {
                     <img
                         src="/remote_interview_logo.png"
                         alt="Interview Pro Logo"
-                        className="w-12 h-12 object-contain shrink-0"
+                        className="w-8 h-8 object-contain shrink-0"
                     />
-                    <h1 className="text-white text-lg sm:text-2xl">Interview<span className="text-blue-400">Pro</span></h1>
+                    <h1 className="text-white text-lg sm:text-xl">Interview<span className="text-blue-400">Pro</span></h1>
                 </div>
                 <ul className="md:flex items-center hidden gap-12 text-sm text-white list-none">
                     {

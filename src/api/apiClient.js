@@ -4,7 +4,6 @@ const request = async (
     endpoint,
     options = {}
 ) => {
-    console.log(options.body)
     const response = await fetch(
         `${API_URL}${endpoint}`,
         {
