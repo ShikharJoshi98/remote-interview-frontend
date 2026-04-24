@@ -3,9 +3,8 @@ import { LuX } from "react-icons/lu";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Input from "../Input";
-import { loginUser, registerUser } from "../../api/authApi";
-import { setLoginCredentials, setRegisterCredentials } from "../../store/features/auth/authSlice";
 import { loginSchema, registerSchema } from "../../validations/authSchema";
+import { loginThunk, registerThunk } from "../../store/features/auth/authThunk";
 
 export function AuthModal({ onClose }) {
     const dispatch = useDispatch();
@@ -52,23 +51,20 @@ export function AuthModal({ onClose }) {
             return;
         }
         setFormError("");
-        try {
-            const data = await registerUser(registerData);
-            setRegisterData({
-                name: "",
-                email: "",
-                password: "",
-                role: ""
+        dispatch(registerThunk(registerData))
+            .unwrap()
+            .then(() => {
+                alert('User created successfully')
+            })
+            .catch((err) => {
+                setFormError(err);
             });
-            setConfirmPassword("");
-        } catch (error) {
-            if (error.message === "User Already exists") {
-                setFormError(error.message);
-            }
-            else {
-                setFormError("Registration failed");
-            }
-        }
+        setRegisterData({
+            name: '',
+            email: '',
+            password: '',
+            role: ''
+        });
     };
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
@@ -78,30 +74,18 @@ export function AuthModal({ onClose }) {
             return;
         }
         setLoginError("");
-        try {
-            const data = await loginUser(loginData);
-            setLoginData({
-                email: "",
-                password: "",
-            });
-            dispatch(
-                setLoginCredentials(data.data)
-            )
-
-            if (data.data.user.role === 'candidate') {
+        dispatch(loginThunk(loginData))
+            .unwrap()
+            .then(() => {
                 navigate('/dashboard');
-            }
-            else if (data.data.user.role === 'interviewer') {
-                navigate('/dashboard')
-            }
-        } catch (error) {
-            if (error.message === "Invalid Credentials") {
+            })
+            .catch((error) => {
                 setLoginError(error.message);
-            }
-            else {
-                setLoginError("Login failed");
-            }
-        }
+            });
+        setLoginData({
+            email: '',
+            password: ''
+        });
     }
 
 
