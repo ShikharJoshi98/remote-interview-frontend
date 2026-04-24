@@ -77,8 +77,14 @@ export function AuthModal({ onClose }) {
         setLoginError("");
         dispatch(loginThunk(loginData))
             .unwrap()
-            .then(() => {
-                navigate('/dashboard');
+            .then((data) => {
+                if (data.user.role === "candidate") {
+                    navigate("/dashboard/candidate");
+                }
+
+                if (data.user.role === "interviewer") {
+                    navigate("/dashboard/interviewer");
+                }
             })
             .catch((err) => {
                 setLoginError(err);

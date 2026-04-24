@@ -8,3 +8,6 @@ export const registerUser = (userData) =>
 
 export const getUser = () =>
     get('/auth/authenticate');
+
+export const logoutUser = () =>
+    post('/auth/logout');

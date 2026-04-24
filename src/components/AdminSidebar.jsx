@@ -34,15 +34,15 @@ export default function Sidebar() {
             </button>
             <ul className="list-none space-y-2 mt-20">
                 <li
-                    className={`cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group ${location.pathname === '/dashboard' ? 'bg-blue-500/10' : 'hover:bg-blue-500/10'}`}
+                    className={`cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group ${location.pathname === '/dashboard/candidate' ? 'bg-blue-500/10' : 'hover:bg-blue-500/10'}`}
                 >
                     <span className="absolute left-0 top-0 h-full w-1 bg-blue-500 rounded-r-md"></span>
                     <div className="flex items-center gap-3">
-                        <span className={`text-xl ${location.pathname === '/dashboard' ? 'text-blue-400' : 'group-hover:text-blue-400'} `}>
+                        <span className={`text-xl ${location.pathname === '/dashboard/candidate' ? 'text-blue-400' : 'group-hover:text-blue-400'} `}>
                             <LuLayoutDashboard />
                         </span>
                         <span
-                            className={`font-semibold ${location.pathname === '/dashboard' ? 'text-blue-400' : 'group-hover:text-blue-400'} transition-opacity duration-300 text-sm
+                            className={`font-semibold ${location.pathname === '/dashboard/candidate' ? 'text-blue-400' : 'group-hover:text-blue-400'} transition-opacity duration-300 text-sm
                                         ${isSideNav
                                     ? 'opacity-100'
                                     : 'opacity-0 w-0 overflow-hidden pointer-events-none'
