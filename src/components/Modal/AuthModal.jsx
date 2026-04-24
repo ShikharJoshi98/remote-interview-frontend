@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { LuX } from "react-icons/lu";
-import { useDispatch } from "react-redux";
+import { LuLoaderCircle, LuX } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Input from "../Input";
 import { loginSchema, registerSchema } from "../../validations/authSchema";
@@ -9,6 +9,7 @@ import { loginThunk, registerThunk } from "../../store/features/auth/authThunk";
 export function AuthModal({ onClose }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth);
     const [isMode, setMode] = useState('login');
     const [registerData, setRegisterData] = useState({
         name: '',
@@ -79,15 +80,14 @@ export function AuthModal({ onClose }) {
             .then(() => {
                 navigate('/dashboard');
             })
-            .catch((error) => {
-                setLoginError(error.message);
+            .catch((err) => {
+                setLoginError(err);
             });
         setLoginData({
             email: '',
             password: ''
         });
     }
-
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 md:px-10 bg-black/70 backdrop-blur-sm">
@@ -144,7 +144,11 @@ export function AuthModal({ onClose }) {
                                 </p>
                             )}
                             <button type="submit" className="mt-6 w-full cursor-pointer py-3 bg-linear-to-r from-green-400 to-blue-700 rounded-lg font-medium">
-                                Sign In →
+                                {
+                                    user.loading ?
+                                        <LuLoaderCircle className="animate-spin mx-auto" /> :
+                                        'Sign In →'
+                                }
                             </button>
                             <p className="text-sm text-neutral-400 mt-4 text-center">
                                 Don't have an account?{" "}
@@ -175,7 +179,11 @@ export function AuthModal({ onClose }) {
                                     {formError}
                                 </p>
                             )}
-                            <button type="submit" className="w-full py-3 bg-linear-to-r from-green-400 to-blue-500 rounded-lg font-medium">Create Account →</button>
+                            <button type="submit" className="w-full py-3 bg-linear-to-r from-green-400 to-blue-500 rounded-lg font-medium">
+                                {user.loading ?
+                                    <LuLoaderCircle className="animate-spin mx-auto" /> :
+                                    'Create Account →'}
+                            </button>
                         </form>
                     }
                 </div>

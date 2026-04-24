@@ -8,7 +8,7 @@ const request = async (
         `${API_URL}${endpoint}`,
         {
             ...options,
-
+            credentials:"include",
             headers: {
                 "Content-Type": "application/json",
                 ...(options.headers || {})

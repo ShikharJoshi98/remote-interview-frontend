@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk, registerThunk } from "./authThunk";
+import { checkAuthThunk, loginThunk, registerThunk } from "./authThunk";
 
 const initialState = {
     user: null,
-    token: null,
     loading: false,
+    authCheckLoading: true,
     error: null,
     isAuthenticated: false
 };
@@ -15,7 +15,6 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.user = null;
-            state.token = null;
             state.isAuthenticated = false;
         }
     },
@@ -40,13 +39,26 @@ const authSlice = createSlice({
             .addCase(loginThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload.user;
-                state.token = action.payload.token;
                 state.isAuthenticated = true;
             })
             .addCase(loginThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            })              
+            })   
+        
+        //check-auth
+            .addCase(checkAuthThunk.pending, (state) => {
+                state.authCheckLoading = true;
+            })
+            .addCase(checkAuthThunk.fulfilled, (state, action) => {
+                state.authCheckLoading = false;
+                state.user = action.payload;
+                state.isAuthenticated = true;
+            })
+            .addCase(checkAuthThunk.rejected, (state) => {
+                state.authCheckLoading = false;
+                state.isAuthenticated = false
+            })
     }
 });
 
