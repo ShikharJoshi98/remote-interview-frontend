@@ -18,7 +18,7 @@ export const interviewerSideNav = [
     {
         title: 'Create Interview',
         icon: LuPlus,
-        path: ''
+        path: '/dashboard/createInterview'
     },
     {
         title: 'Candidates',
@@ -114,3 +114,10 @@ export const quickActionsArray = [
         iconBackgroundColor: 'bg-yellow-500/65'
     }
 ]
+
+export const analyticsData = [
+    { name: "Completed", value: 60, color: "#22c55e" },
+    { name: "Scheduled", value: 23, color: "#3b82f6" },
+    { name: "Cancelled", value: 10, color: "#f97316" },
+    { name: "No Show", value: 7, color: "#8b5cf6" },
+];

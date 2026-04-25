@@ -10,6 +10,7 @@ import ProtectedRoute from "./guards/ProtectedRoute";
 import CandidateDashboard from "./pages/CandidateDashboard";
 import InterviewerDashboard from "./pages/InterviewerDashboard";
 import RoleProtectedRoute from "./guards/RoleProtectedRoute";
+import CreateInterview from "./pages/CreateInterview";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route path="candidate" element={<RoleProtectedRoute allowedRole="candidate"><CandidateDashboard /></RoleProtectedRoute>} />
           <Route path="interviewer" element={<RoleProtectedRoute allowedRole="interviewer"><InterviewerDashboard /></RoleProtectedRoute>} />
+          <Route path="createInterview" element={<RoleProtectedRoute allowedRole="interviewer"><CreateInterview /></RoleProtectedRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>

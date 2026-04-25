@@ -1,11 +1,27 @@
 import { useState } from "react";
-import { LuChevronLeft, LuChevronRight, LuLayoutDashboard } from "react-icons/lu";
-import { useLocation } from "react-router-dom";
+import { LuChevronLeft, LuChevronRight, LuLayoutDashboard, LuLogOut } from "react-icons/lu";
+import { useLocation, useNavigate } from "react-router-dom";
 import { interviewerSideNav } from "../constant/DashboardConstant";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutThunk } from "../store/features/auth/authThunk";
 
 export default function Sidebar() {
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.auth);
+    const navigate = useNavigate();
     const [isSideNav, setSideNav] = useState(true);
     const location = useLocation();
+
+    const handleLogout = async () => {
+        dispatch(logoutThunk())
+            .unwrap()
+            .then(() => {
+                navigate('/');
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
+    }
 
     return (
         <aside
@@ -34,30 +50,42 @@ export default function Sidebar() {
                 {isSideNav ? <LuChevronLeft size={16} /> : <LuChevronRight size={16} />}
             </button>
             <ul className="list-none space-y-2 mt-20">
-                {interviewerSideNav.map((sideNavItem, index) => {
+                {user.role === 'interviewer' && interviewerSideNav.map((sideNavItem, index) => {
                     const Icon = sideNavItem.icon;
-                    return (<li
-                        key={index}
-                        className={`cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group ${location.pathname === '/dashboard/candidate' ? 'bg-blue-500/10' : 'hover:bg-[#1c193d]'}`}
-                    >
-                        <div className="flex items-center gap-3">
-                            <span className={`text-xl ${location.pathname === '/dashboard/candidate' ? 'text-[#9257f6]' : 'group-hover:text-[#9257f6] text-white/70'} `}>
-                                <Icon />
-                            </span>
-                            <span
-                                className={`font-semibold ${location.pathname === '/dashboard/candidate' ? 'text-white' : 'group-hover:text-white text-white/70'} transition-opacity duration-300 text-sm whitespace-nowrap
+                    return (
+                        <li
+                            onClick={() => navigate(sideNavItem.path)}
+                            key={index}
+                            className={`cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group ${location.pathname === sideNavItem.path ? 'bg-blue-500/10' : 'hover:bg-[#1c193d]'}`}
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className={`text-xl ${location.pathname === sideNavItem.path ? 'text-[#9257f6]' : 'group-hover:text-[#9257f6] text-white/70'} `}>
+                                    <Icon />
+                                </span>
+                                <span
+                                    className={`font-semibold ${location.pathname === sideNavItem.path ? 'text-white' : 'group-hover:text-white text-white/70'} transition-opacity duration-300 text-sm whitespace-nowrap
                                         ${isSideNav
-                                        ? 'opacity-100'
-                                        : 'opacity-0 w-0 overflow-hidden pointer-events-none'
-                                    }`}
-                            >
-                                {sideNavItem.title}
-                            </span>
-                        </div>
-                    </li>)
+                                            ? 'opacity-100'
+                                            : 'opacity-0 w-0 overflow-hidden pointer-events-none'
+                                        }`}
+                                >
+                                    {sideNavItem.title}
+                                </span>
+                            </div>
+                        </li>)
                 }
                 )}
             </ul>
+            <button onClick={handleLogout} className="flex items-center gap-3 p-2 cursor-pointer absolute bottom-10 hover:text-red-600 text-red-500">
+                <span className='text-xl'>
+                    <LuLogOut />
+                </span>
+                <span
+                    className={`font-semibold transition-opacity duration-300 text-sm whitespace-nowrap ${isSideNav ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden pointer-events-none'}`}
+                >
+                    Logout
+                </span>
+            </button>
         </aside>
     )
 }

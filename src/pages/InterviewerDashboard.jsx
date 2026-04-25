@@ -1,22 +1,15 @@
 import { FaRegUser, FaRegUserCircle } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { LuCalendar, LuPlus } from "react-icons/lu";
-import { interviewCandidates, interviewerCards, quickActionsArray } from "../constant/DashboardConstant";
+import { analyticsData, interviewCandidates, interviewerCards, quickActionsArray } from "../constant/DashboardConstant";
 import { CiCalendar } from "react-icons/ci";
 import { GoClock } from "react-icons/go";
 import { Pie, PieChart, Cell } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
 
-const data = [
-    { name: "Completed", value: 60, color: "#22c55e" },
-    { name: "Scheduled", value: 23, color: "#3b82f6" },
-    { name: "Cancelled", value: 10, color: "#f97316" },
-    { name: "No Show", value: 7, color: "#8b5cf6" },
-];
-
 export default function InterviewerDashboard() {
     return (
-        <div className="py-5 px-4 sm:px-8">
+        <main className="py-5 px-4 sm:px-8">
             <div className="flex justify-between items-center text-white">
                 <div>
                     <h1 className="text-2xl font-semibold">Welcome back, Alex!</h1>
@@ -102,7 +95,7 @@ export default function InterviewerDashboard() {
                         <div className="h-42 w-42 lg:h-48 lg:w-48 relative">
                             <PieChart style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }}>
                                 <Pie
-                                    data={data}
+                                    data={analyticsData}
                                     dataKey="value"
                                     innerRadius="80%"
                                     outerRadius="100%"
@@ -111,7 +104,7 @@ export default function InterviewerDashboard() {
                                     stroke="none"
                                     isAnimationActive={true}
                                 >
-                                    {data.map((entry, index) => (
+                                    {analyticsData.map((entry, index) => (
                                         <Cell
                                             key={index}
                                             fill={entry.color}
@@ -130,7 +123,7 @@ export default function InterviewerDashboard() {
                             </div>
                         </div>
                         <div className="space-y-4">
-                            {data.map(item => (
+                            {analyticsData.map(item => (
                                 <div
                                     key={item.name}
                                     className="flex text-sm items-center justify-between gap-8"
@@ -175,6 +168,6 @@ export default function InterviewerDashboard() {
                     )}
                 </div>
             </div>
-        </div>
+        </main>
     )
 }
