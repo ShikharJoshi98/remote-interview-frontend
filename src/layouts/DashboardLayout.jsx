@@ -10,8 +10,7 @@ export default function DashboardLayout() {
                 <Sidebar />
             </div>
             <div className="flex flex-col w-full">
-                <AdminNavbar />
-                <div className="flex-1 text-white text-3xl bg-[#030303] overflow-y-auto">
+                <div className="flex-1 bg-[#090e1e] overflow-y-auto">
                     <Outlet />
                 </div>
             </div>
