@@ -9,7 +9,7 @@ export default function Sidebar() {
 
     return (
         <aside
-            className={`${isSideNav ? 'w-52' : 'w-20'} transition-all duration-300 min-h-screen hidden bg-[#090e1e] p-4 lg:block sticky top-0 left-0 border-r border-white/40`}
+            className={`${isSideNav ? 'w-54' : 'w-20'} transition-all duration-300 min-h-screen hidden bg-[#090e1e] p-4 lg:block sticky top-0 left-0 border-r border-white/15`}
         >
             <div className="flex items-center gap-2">
                 <img
@@ -29,7 +29,7 @@ export default function Sidebar() {
             </div>
             <button
                 onClick={() => setSideNav(!isSideNav)}
-                className="absolute cursor-pointer z-50 -right-3 top-20 bg-zinc-800 border border-gray-300 text-white rounded-full p-1 shadow-md hover:scale-105 transition"
+                className="absolute cursor-pointer z-50 -right-3 top-20 bg- border border-white/70 text-white rounded-full p-1 bg-[#090e1e] shadow-md hover:scale-105 transition"
             >
                 {isSideNav ? <LuChevronLeft size={16} /> : <LuChevronRight size={16} />}
             </button>
@@ -37,6 +37,7 @@ export default function Sidebar() {
                 {interviewerSideNav.map((sideNavItem, index) => {
                     const Icon = sideNavItem.icon;
                     return (<li
+                        key={index}
                         className={`cursor-pointer relative flex items-center justify-between p-2 rounded-md text-white/70 group ${location.pathname === '/dashboard/candidate' ? 'bg-blue-500/10' : 'hover:bg-[#1c193d]'}`}
                     >
                         <div className="flex items-center gap-3">
