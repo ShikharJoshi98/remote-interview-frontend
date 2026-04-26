@@ -3,19 +3,35 @@ import FormInput from "../components/FormInput"
 import { LuBriefcase, LuCalendar, LuClipboard, LuClock, LuCode, LuMail, LuVideo } from "react-icons/lu"
 import FormSelect from "../components/FormSelect"
 import { FaRegPenToSquare } from "react-icons/fa6"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { createInterviewThunk } from "../store/features/interview/interviewThunk"
+import InterviewModal from "../components/Modal/InterviewModal"
 
 export default function CreateInterview() {
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.auth);
+    const [isInterviewModal, setInterviewModal] = useState(false);
     const [formData, setformData] = useState({
         name: '',
         email: '',
         jobRole: '',
         interviewType: '',
+        interviewer: user?._id,
         interviewMode: '',
         date: '',
         time: '',
         extraNotes: ''
     });
+
+    useEffect(() => {
+        if (user?._id) {
+            setformData(prev => ({
+                ...prev,
+                interviewer: user._id
+            }));
+        }
+    }, [user]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setformData((prev) => ({
@@ -25,10 +41,11 @@ export default function CreateInterview() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
+        setInterviewModal(true);
     }
     return (
         <main className="py-5 px-4 sm:px-8">
+            <button onClick={() => setInterviewModal(true)}>interview model</button>
             <h1 className="text-2xl text-white font-semibold">Create Interview</h1>
             <p className="text-white/60 text-sm mt-1">Schedule a new interview and invite a candidate.</p>
             <form onSubmit={handleSubmit} className="w-full space-y-8 rounded-2xl border border-white/10 bg-[#111827] p-5 shadow-lg mt-12">
@@ -86,6 +103,9 @@ export default function CreateInterview() {
                 </div>
                 <button className="text-white block bg-violet-600 py-2 px-4 mx-auto rounded-lg cursor-pointer font-medium hover:bg-violet-700">Create Interview</button>
             </form>
+            {
+                isInterviewModal && <InterviewModal candidate={formData} onClose={() => setInterviewModal(false)} />
+            }
         </main>
     )
 }

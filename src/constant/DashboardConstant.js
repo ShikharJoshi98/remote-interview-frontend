@@ -1,6 +1,6 @@
 import { FaClipboardList, FaUser } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
-import { LuCalendar, LuLayoutDashboard, LuPlus, LuUsers } from "react-icons/lu";
+import { LuBriefcase, LuCalendar, LuClock, LuCode, LuFilePen, LuLayoutDashboard, LuMail, LuPlus, LuUser, LuUsers, LuVideo } from "react-icons/lu";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 import { VscGraph } from "react-icons/vsc";
 
@@ -121,3 +121,54 @@ export const analyticsData = [
     { name: "Cancelled", value: 10, color: "#f97316" },
     { name: "No Show", value: 7, color: "#8b5cf6" },
 ];
+
+export const interviewDetails = [
+    {
+        icon: LuUser,
+        title: 'Candidate',
+        value: 'name',
+        iconColor: 'text-blue-500'
+    },
+    {
+        icon: LuMail,
+        title: 'Email',
+        value: 'email',
+        iconColor: 'text-yellow-500'
+    },
+    {
+        icon: LuBriefcase,
+        title: 'Job Role',
+        value: 'jobRole',
+        iconColor: 'text-sky-500'
+    },
+    {
+        icon: LuCode,
+        title: 'Interview Type',
+        value: 'interviewType',
+        iconColor: 'text-blue-700'
+    },
+    {
+        icon: LuVideo,
+        title: 'Interview Mode',
+        value: 'interviewMode',
+        iconColor: 'text-violet-500'
+    },
+    {
+        icon: LuCalendar,
+        title: 'Date',
+        value: 'date',
+        iconColor: 'text-green-500'
+    },
+    {
+        icon: LuClock,
+        title: 'Time',
+        value: 'time',
+        iconColor: 'text-orange-500'
+    },
+    {
+        icon: LuFilePen,
+        title: 'Notes',
+        value: 'extraNotes',
+        iconColor: 'text-yellow-700'
+    }
+]
