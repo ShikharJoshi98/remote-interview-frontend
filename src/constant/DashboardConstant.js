@@ -1,7 +1,8 @@
-import { FaClipboardList, FaUser } from "react-icons/fa";
+import { FaClipboardList, FaRegPaperPlane, FaUser } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
-import { LuBriefcase, LuCalendar, LuClock, LuCode, LuFilePen, LuLayoutDashboard, LuMail, LuPlus, LuUser, LuUsers, LuVideo } from "react-icons/lu";
+import { LuBrain, LuBriefcase, LuCalendar, LuCircleCheck, LuClipboard, LuClock, LuCode, LuComputer, LuFile, LuFilePen, LuFileText, LuLayoutDashboard, LuMail, LuPlus, LuUser, LuUsers, LuVideo } from "react-icons/lu";
 import { MdOutlineLibraryBooks } from "react-icons/md";
+import { RxCrossCircled } from "react-icons/rx";
 import { VscGraph } from "react-icons/vsc";
 
 export const interviewerSideNav = [
@@ -13,7 +14,7 @@ export const interviewerSideNav = [
     {
         title: 'Scheduled Interviews',
         icon: LuCalendar,
-        path: ''
+        path: '/dashboard/scheduled-interview'
     },
     {
         title: 'Create Interview',
@@ -23,17 +24,17 @@ export const interviewerSideNav = [
     {
         title: 'Candidates',
         icon: FiUsers,
-        path: ''
+        path: '/dashboard/candidates'
     },
     {
         title: 'Question Bank',
         icon: MdOutlineLibraryBooks,
-        path: ''
+        path: '/dashboard/question-bank'
     },
     {
         title: 'Assessment',
         icon: VscGraph,
-        path: ''
+        path: '/dashboard/assessment'
     }
 ]
 
@@ -170,5 +171,326 @@ export const interviewDetails = [
         title: 'Notes',
         value: 'extraNotes',
         iconColor: 'text-yellow-700'
+    }
+]
+
+export const scheduledInterviewCards = [
+    {
+        title: 'Total Interviews',
+        icon: LuCalendar,
+        data: 28,
+        subText: 'All scheduled interviews',
+        iconBackgroundColor: 'bg-violet-500/65'
+    },
+    {
+        title: 'Upcoming',
+        icon: LuClock,
+        data: 12,
+        subText: 'Interviews to come',
+        iconBackgroundColor: 'bg-blue-500/65'
+    },
+    {
+        title: 'Completed',
+        icon: LuCircleCheck,
+        data: 14,
+        subText: 'Successfully completed',
+        iconBackgroundColor: 'bg-green-500/65'
+    },
+    {
+        title: 'Cancelled',
+        icon: RxCrossCircled,
+        data: 2,
+        subText: 'Interviews cancelled',
+        iconBackgroundColor: 'bg-red-500/65'
+    }
+]
+
+export const interviews = [
+    {
+        candidate: "Rohit Sharma",
+        email: "rohit@email.com",
+        role: "Frontend Developer",
+        type: "Coding",
+        tag: "DSA",
+        date: "26 May, 2025",
+        time: "10:00 AM",
+        duration: "60 min",
+        status: "Upcoming"
+    },
+    {
+        candidate: "Priya Patel",
+        email: "priya@email.com",
+        role: "Backend Developer",
+        type: "System Design",
+        tag: null,
+        date: "26 May, 2025",
+        time: "02:00 PM",
+        duration: "90 min",
+        status: "Upcoming"
+    },
+    {
+        candidate: "Neha Singh",
+        email: "neha@email.com",
+        role: "Frontend Developer",
+        type: "System Design",
+        tag: null,
+        date: "27 May, 2025",
+        time: "03:00 PM",
+        duration: "90 min",
+        status: "Completed"
+    },
+    {
+        candidate: "Vikram Mehta",
+        email: "vikram@email.com",
+        role: "Frontend Developer",
+        type: "Coding",
+        tag: "DSA",
+        date: "21 May, 2025",
+        time: "11:00 AM",
+        duration: "60 min",
+        status: "Cancelled"
+    }
+];
+
+export const badgeStyles = {
+    Upcoming: "bg-blue-500/20 text-blue-400",
+    Completed: "bg-green-500/20 text-green-400",
+    Cancelled: "bg-red-500/20 text-red-400"
+};
+
+export const candidatesCards = [
+    {
+        title: 'Total Candidates',
+        icon: LuUsers,
+        data: 156,
+        subText: 'All candidates',
+        iconBackgroundColor: 'bg-violet-500/65'
+    },
+    {
+        title: 'In Pipeline',
+        icon: LuUser,
+        data: 68,
+        subText: 'Active Candidates',
+        iconBackgroundColor: 'bg-blue-500/65'
+    },
+    {
+        title: 'Hired',
+        icon: LuCircleCheck,
+        data: 24,
+        subText: 'Successfully Hired',
+        iconBackgroundColor: 'bg-green-500/65'
+    },
+    {
+        title: 'Rejected',
+        icon: RxCrossCircled,
+        data: 64,
+        subText: 'Not Moved forward',
+        iconBackgroundColor: 'bg-red-500/65'
+    }
+]
+
+export const candidatePipelineArray = [
+    {
+        icon: LuFileText,
+        title: 'Applied',
+        data: 56,
+        iconColor: 'bg-violet-700/40'
+    },
+    {
+        icon: LuUser,
+        title: 'In Pipeline',
+        data: 32,
+        iconColor: 'bg-blue-700/40'
+    },
+    {
+        icon: LuCalendar,
+        title: 'Interview',
+        data: 28,
+        iconColor: 'bg-orange-700/40'
+    },
+    {
+        icon: LuFile,
+        title: 'Assessment',
+        data: 16,
+        iconColor: 'bg-blue-500/40'
+    },
+    {
+        icon: LuMail,
+        title: 'Offer',
+        data: 8,
+        iconColor: 'bg-green-500/40'
+    },
+    {
+        icon: LuUser,
+        title: 'Hired',
+        data: 24,
+        iconColor: 'bg-green-700/40'
+    }
+];
+
+export const candidates = [
+    {
+        candidate: "Rohit Sharma",
+        email: "rohit@email.com",
+        role: "Frontend Developer",
+        stage: "Interview",
+        date: "26 May, 2025",
+        time: "10:00 AM",
+        status: "In Progress"
+    },
+    {
+        candidate: "Vikram Mehta",
+        email: "vikram@email.com",
+        role: "Backend Developer",
+        stage: "Screening",
+        date: "22 May, 2025",
+        time: "10:00 AM",
+        status: "Hired"
+    }
+]
+
+export const stageStyles = {
+    Interview: "bg-orange-500/20 text-orange-300",
+    Screening: "bg-blue-500/20 text-blue-300",
+    Assessment: "bg-cyan-500/20 text-cyan-300",
+    Offer: "bg-green-500/20 text-green-300",
+    Hired: "bg-emerald-500/20 text-emerald-300",
+    Rejected: "bg-red-500/20 text-red-300"
+};
+
+export const statusStyles = {
+    "In Progress": "bg-blue-500/20 text-blue-300",
+    Pending: "bg-orange-500/20 text-orange-300",
+    Hired: "bg-green-500/20 text-green-300",
+    Rejected: "bg-red-500/20 text-red-300"
+};
+
+export const questionBankCardArray = [
+    {
+        title: 'Total Questions ',
+        icon: LuClipboard,
+        data: 1248,
+        subText: 'All questions',
+        iconBackgroundColor: 'bg-violet-500/65'
+    },
+    {
+        title: 'Coding Questions',
+        icon: LuCode,
+        data: 568,
+        subText: 'Coding Related',
+        iconBackgroundColor: 'bg-blue-500/65'
+    },
+    {
+        title: 'System Design',
+        icon: LuComputer,
+        data: 312,
+        subText: 'System Design questions',
+        iconBackgroundColor: 'bg-green-500/65'
+    },
+    {
+        title: 'Behavioral',
+        icon: LuBrain,
+        data: 368,
+        subText: 'Behavioral questions',
+        iconBackgroundColor: 'bg-orange-500/65'
+    }
+]
+
+export const typeStyles = {
+    Coding: "bg-violet-500/20 text-violet-300",
+    "System Design": "bg-blue-500/20 text-blue-300",
+    Behavioral: "bg-orange-500/20 text-orange-300"
+};
+
+export const difficultyStyles = {
+    Easy: "bg-green-500/20 text-green-300",
+    Medium: "bg-yellow-500/20 text-yellow-300",
+    Hard: "bg-red-500/20 text-red-300"
+};
+
+export const questionTypeIcon = {
+    Coding: "bg-violet-500/70",
+    "System Design": "bg-blue-500/70",
+    Behavioral: "bg-orange-500/70"
+};
+
+export const problemArray = [
+    {
+        title: "Two Sum Problem",
+        description: "Given an array of integers nums...",
+        type: "Coding",
+        difficulty: "Easy",
+        topic: "Arrays",
+        date: "26 May, 2025",
+        time: "10:00 AM"
+    }
+]
+
+export const assessmentCardArray = [
+    {
+        title: 'Total Assessments ',
+        icon: LuFileText,
+        data: 28,
+        subText: 'All assessments',
+        iconBackgroundColor: 'bg-violet-500/65'
+    },
+    {
+        title: 'Active Assessments',
+        icon: FaRegPaperPlane,
+        data: 16,
+        subText: 'Currently active',
+        iconBackgroundColor: 'bg-blue-500/65'
+    },
+    {
+        title: 'Completed',
+        icon: LuCircleCheck,
+        data: 234,
+        subText: 'Total Completed',
+        iconBackgroundColor: 'bg-green-500/65'
+    },
+    {
+        title: 'Drafts',
+        icon: LuClock,
+        data: 7,
+        subText: 'Saved as Drafts',
+        iconBackgroundColor: 'bg-orange-500/65'
+    }
+]
+
+export const typeAssessmentStyles = {
+    Coding: "bg-violet-500/20 text-violet-300",
+    "System Design": "bg-blue-500/20 text-blue-300",
+    Behavioral: "bg-orange-500/20 text-orange-300"
+};
+
+export const difficultyAssessmentStyles = {
+    Easy: "bg-green-500/20 text-green-300",
+    Medium: "bg-yellow-500/20 text-yellow-300",
+    Hard: "bg-red-500/20 text-red-300"
+};
+
+export const statusAssessmentStyles = {
+    Active: "bg-green-500/20 text-green-300",
+    Draft: "bg-orange-500/20 text-orange-300",
+    Inactive: "bg-blue-500/20 text-blue-300"
+};
+
+export const assessmentIconStyles = {
+    Coding: "bg-violet-500/20",
+    "System Design": "bg-blue-500/20",
+    Behavioral: "bg-orange-500/20"
+};
+
+export const assessmentArray = [
+    {
+        title: "Frontend Developer Test",
+        description: "Evaluate skills in HTML CSS...",
+        type: "Coding",
+        difficulty: "Medium",
+        questions: 10,
+        duration: 60,
+        status: "Active",
+        date: "26 May, 2025",
+        time: "10:00 AM"
     }
 ]

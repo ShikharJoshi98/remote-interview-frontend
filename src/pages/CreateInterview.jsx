@@ -45,7 +45,6 @@ export default function CreateInterview() {
     }
     return (
         <main className="py-5 px-4 sm:px-8">
-            <button onClick={() => setInterviewModal(true)}>interview model</button>
             <h1 className="text-2xl text-white font-semibold">Create Interview</h1>
             <p className="text-white/60 text-sm mt-1">Schedule a new interview and invite a candidate.</p>
             <form onSubmit={handleSubmit} className="w-full space-y-8 rounded-2xl border border-white/10 bg-[#111827] p-5 shadow-lg mt-12">
