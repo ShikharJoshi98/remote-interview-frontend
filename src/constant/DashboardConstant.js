@@ -1,6 +1,6 @@
 import { FaClipboardList, FaRegPaperPlane, FaUser } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
-import { LuBrain, LuBriefcase, LuCalendar, LuCircleCheck, LuClipboard, LuClock, LuCode, LuComputer, LuFile, LuFilePen, LuFileText, LuLayoutDashboard, LuMail, LuPlus, LuUser, LuUsers, LuVideo } from "react-icons/lu";
+import { LuBrain, LuBriefcase, LuCalendar, LuChartLine, LuCircleCheck, LuClipboard, LuClock, LuCode, LuComputer, LuFile, LuFilePen, LuFileText, LuLayoutDashboard, LuMail, LuPlus, LuUser, LuUsers, LuVideo } from "react-icons/lu";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 import { RxCrossCircled } from "react-icons/rx";
 import { VscGraph } from "react-icons/vsc";
@@ -38,6 +38,29 @@ export const interviewerSideNav = [
     }
 ]
 
+export const candidateSideNav = [
+    {
+        title: 'Dashboard',
+        icon: LuLayoutDashboard,
+        path: '/dashboard/candidate'
+    },
+    {
+        title: 'My Interviews',
+        icon: LuCalendar,
+        path: '/dashboard/interview'
+    },
+    {
+        title: 'Assessments',
+        icon: LuFileText,
+        path: ''
+    },
+    {
+        title: 'Profile',
+        icon: LuUser,
+        path: ''
+    }
+]
+
 export const interviewerCards = [
     {
         title: 'Scheduled Interviews',
@@ -59,6 +82,30 @@ export const interviewerCards = [
         data: 18,
         subText: 'This month',
         iconBackgroundColor: 'bg-blue-500/65'
+    }
+]
+
+export const candidateCards = [
+    {
+        title: 'Upcoming Interviews',
+        icon: LuCalendar,
+        data: 3,
+        subText: 'Next: Google - Tomorrow, 10:00 AM',
+        iconBackgroundColor: 'bg-blue-500/65'
+    },
+    {
+        title: 'Completed Interviews',
+        icon: LuCircleCheck,
+        data: 5,
+        subText: 'Keep up the great work',
+        iconBackgroundColor: 'bg-green-500/65'
+    },
+    {
+        title: 'Success Rate',
+        icon: LuChartLine,
+        data: '82%',
+        subText: 'Keep pushing your limits!',
+        iconBackgroundColor: 'bg-yellow-500/65'
     }
 ]
 
@@ -86,6 +133,27 @@ export const interviewCandidates = [
         designation: 'DevOps Engineer',
         date: '23 May, 2025',
         time: '3:00 PM'
+    }
+]
+
+export const upcomingInterviews = [
+    {
+        company: 'Google',
+        designation: 'Frontend Developer',
+        date: '22 May, 2025',
+        time: '10:00 AM'
+    },
+    {
+        company: 'Microsoft',
+        designation: 'Backend Developer',
+        date: '22 May, 2025',
+        time: '2:00 PM'
+    },
+    {
+        company: 'Amazon',
+        designation: 'Full Stack Developer',
+        date: '23 May, 2025',
+        time: '11:00 AM'
     }
 ]
 
@@ -205,6 +273,37 @@ export const scheduledInterviewCards = [
     }
 ]
 
+export const myInterviewCards = [
+    {
+        title: 'Upcoming',
+        icon: LuCalendar,
+        data: 3,
+        subText: 'Interviews',
+        iconBackgroundColor: 'bg-violet-500/65'
+    },
+    {
+        title: 'In Progress',
+        icon: LuClock,
+        data: 1,
+        subText: 'Interviews',
+        iconBackgroundColor: 'bg-blue-500/65'
+    },
+    {
+        title: 'Completed',
+        icon: LuCircleCheck,
+        data: 5,
+        subText: 'Interviews',
+        iconBackgroundColor: 'bg-green-500/65'
+    },
+    {
+        title: 'Cancelled',
+        icon: RxCrossCircled,
+        data: 1,
+        subText: 'Interviews cancelled',
+        iconBackgroundColor: 'bg-red-500/65'
+    }
+]
+
 export const interviews = [
     {
         candidate: "Rohit Sharma",
@@ -249,6 +348,18 @@ export const interviews = [
         time: "11:00 AM",
         duration: "60 min",
         status: "Cancelled"
+    }
+];
+
+export const myInterviews = [
+    {
+        interview: "Frontend Developer Interview",
+        company: "TechNova Solutions",
+        role: "Frontend Developer",
+        type: "Coding",
+        date: "26 May, 2025",
+        time: "10:00 AM",
+        status: "Upcoming"
     }
 ];
 

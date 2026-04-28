@@ -14,6 +14,7 @@ import ScheduledInterview from "./pages/ScheduledInterview";
 import Candidates from "./pages/Candidates";
 import QuestionBank from "./pages/QuestionBank";
 import Assessment from "./pages/Assessment";
+import MyInterviews from "./pages/MyInterviews";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ function App() {
         </Route>
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route path="candidate" element={<RoleProtectedRoute allowedRole="candidate"><CandidateDashboard /></RoleProtectedRoute>} />
+          <Route path="interview" element={<RoleProtectedRoute allowedRole="candidate"><MyInterviews /></RoleProtectedRoute>} />
+
           <Route path="interviewer" element={<RoleProtectedRoute allowedRole="interviewer"><InterviewerDashboard /></RoleProtectedRoute>} />
           <Route path="createInterview" element={<RoleProtectedRoute allowedRole="interviewer"><CreateInterview /></RoleProtectedRoute>} />
           <Route path="scheduled-interview" element={<RoleProtectedRoute allowedRole="interviewer"><ScheduledInterview /></RoleProtectedRoute>} />
